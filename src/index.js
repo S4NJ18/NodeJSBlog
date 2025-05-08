@@ -1,0 +1,56 @@
+import dotenv from "dotenv"
+import express from "express"
+import path from "path"
+import { fileURLToPath } from "url";
+import cookieParser from "cookie-parser"
+import {connectDB} from "./db/DB_connection.js"
+import {app} from "./app.js"
+import userRoutes from "./routes/user.routes.js"
+import commonRoutes from "./routes/common.routes.js"
+import editUserRouts from "./routes/user.routes.js"
+import deleteUserRouts from "./routes/user.routes.js"
+import signIn from "./routes/auth.routes.js"
+import signUp from "./routes/auth.routes.js"
+
+
+// __dirname banane ke liye (ES modules ke liye)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config()
+app.use(express.json())
+app.use(cookieParser());
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
+
+
+// Normal Path
+app.use('/',commonRoutes);
+app.use('/',signIn)
+app.use('/',signUp)
+app.use('/profile',editUserRouts);
+app.use('/profile/delete',deleteUserRouts);
+
+// Api Path
+app.use('/api/auth',signIn);
+app.use('/api/auth', signUp);
+app.use('/api/alluser',userRoutes)
+
+connectDB()
+.then(()=>{
+    app.listen(process.env.PORT||8080,()=>{
+        console.log(`Server is running on http://localhost:${process.env.PORT}`)
+        
+    })
+})
+.catch((err)=>{
+    console.log(err)
+})
+
+
+
+
+
+
