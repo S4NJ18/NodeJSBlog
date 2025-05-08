@@ -26,11 +26,8 @@ export const tokenVerification = (req, res, next) =>{
 
 export const webTokenVerification = (req, res, next) =>{
     const getUserWebToken = req.cookies.token
-
     if(!getUserWebToken) res.status(401).render("login")
-
     const result = jwt.verify(getUserWebToken,process.env.jwt_key_secret)
-
     if(!result) return res.status(401).send("<p>Access Denied</p>")
      
         try{

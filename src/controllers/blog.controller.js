@@ -9,11 +9,21 @@ export const blogList = async(req, res)=>{
     res.status(200).json(blogs);
 }
 
+export const blogOpen = async(req, res)=>{
+    const slug = req.params.slug;
+    const oneBlog = await blog.findOne({ slug });
+  
+    if (!oneBlog) {
+      return res.status(404).send("Blog not found");
+    }
+  
+    res.status(200).json(oneBlog);
+}
+
 
 export const getBlog = async(req, res)=>{
     const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
     // console.log(getAdminUser.username)
-
     try{
         if(!getAdminUserDetails) res.status(401).render("login")
         res.status(200).render("add-blog")
@@ -26,11 +36,16 @@ export const getBlog = async(req, res)=>{
 export const postBlog = async(req, res)=>{
     const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
     const {title, content, metaDescription, metaKeywords} = req.body;
+    const convert_smallLetter = title.toLowerCase();
+    const add_dash_text = convert_smallLetter.replaceAll(" ","-")
+    const makeURLslug = `http://localhost:8000/blogs/${add_dash_text}`
     if(!getAdminUserDetails) res.status(401).render("login")
     try{
         const addBlog = new blog({
 
                 title:title,
+                url:makeURLslug,
+                slug:add_dash_text,
                 content:content,
                 metaDescription:metaDescription,
                 metaKeywords:metaKeywords,

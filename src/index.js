@@ -13,6 +13,7 @@ import signIn from "./routes/auth.routes.js"
 import signUp from "./routes/auth.routes.js"
 import createBlog from "./routes/blog.routes.js"
 import blog from "./routes/blog.routes.js"
+import oneBlogOpen from "./routes/blog.routes.js"
 
 
 // __dirname banane ke liye (ES modules ke liye)
@@ -33,6 +34,7 @@ app.use('/',signIn)
 app.use('/',signUp)
 app.use('/',createBlog)
 app.use('/',blog)
+app.use('/',oneBlogOpen)
 app.use('/profile',editUserRouts);
 app.use('/profile/delete',deleteUserRouts);
 
