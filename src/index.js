@@ -11,6 +11,8 @@ import editUserRouts from "./routes/user.routes.js"
 import deleteUserRouts from "./routes/user.routes.js"
 import signIn from "./routes/auth.routes.js"
 import signUp from "./routes/auth.routes.js"
+import createBlog from "./routes/blog.routes.js"
+import blog from "./routes/blog.routes.js"
 
 
 // __dirname banane ke liye (ES modules ke liye)
@@ -25,11 +27,12 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 
-
 // Normal Path
 app.use('/',commonRoutes);
 app.use('/',signIn)
 app.use('/',signUp)
+app.use('/',createBlog)
+app.use('/',blog)
 app.use('/profile',editUserRouts);
 app.use('/profile/delete',deleteUserRouts);
 

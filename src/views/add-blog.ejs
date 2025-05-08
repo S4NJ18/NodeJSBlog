@@ -1,0 +1,43 @@
+<!-- views/add-blog.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.ckeditor.com/4.25.1-lts/standard/ckeditor.js"></script>
+</head>
+<body>
+    <h2>Add Blog Post</h2>
+<form action="/blog/create" method="POST">
+  <label>Title:</label>
+  <input type="text" name="title" required><br><br>
+
+  <label>Body:</label>
+  <textarea id="editor" name="content" required></textarea><br><br>
+
+  <label>Upload Image:</label>
+  <input type="file" name="image" accept="image/*"><br><br>
+
+  <label>Meta Description:</label>
+  <input type="text" name="metaDescription"><br><br>
+
+  <label>Meta Keywords (comma-separated):</label>
+  <input type="text" name="metaKeywords"><br><br>
+
+  <button type="submit">Publish</button>
+</form>
+
+<script>
+    CKEDITOR.replace('editor');
+  </script>
+</body>
+</html>
+
+
+
+<!-- Add rich text editor support -->
+
+
+
