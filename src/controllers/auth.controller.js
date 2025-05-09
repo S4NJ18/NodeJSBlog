@@ -27,7 +27,9 @@ export const signInHandler= async(req, res)=>{
                     maxAge: 24 * 60 * 60 * 1000 
                 });
                 
-            res.status(200).json({msg:`welcome ${getData.username}`})
+            // res.status(200).json({msg:`welcome ${getData.username}`})
+
+            res.status(200).redirect("/dashboard")
                     
             }else{
                 res.status(401).json({msg:"Unauthorised"})

@@ -1,0 +1,44 @@
+<!-- views/add-blog.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Edit: <%= prevalue.title %> </title>
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+
+</head>
+<body>
+    <h2>Add Blog Post</h2>
+<form action="/admin/posts/edit/<%= prevalue._id %>" method="post">
+  <label>Title:</label>
+  <input type="text" name="title" value="<%= prevalue.title %>" required><br><br>
+
+  <label>Body:</label>
+  <textarea id="editor1" name="content" required><%= prevalue.content %></textarea><br><br>
+
+  <label>Upload Image:</label>
+  <input type="file" name="image" accept="image/*"><br><br>
+
+  <label>Meta Description:</label>
+  <input type="text" name="metaDescription" value="<%= prevalue.metaDescription %>"><br><br>
+
+  <label>Meta Keywords (comma-separated):</label>
+  <input type="text" name="metaKeywords" value="<%= prevalue.metaKeywords %>"><br><br>
+
+  <button type="submit">Update</button>
+</form>
+
+<script>
+    CKEDITOR.replace('editor1');
+  </script>
+</body>
+</html>
+
+
+
+<!-- Add rich text editor support -->
+
+
+
