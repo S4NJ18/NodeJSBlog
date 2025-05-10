@@ -20,6 +20,7 @@
         <thead class="table-dark">
           <tr>
             <th>#</th>
+            <th>Thumbnail</th>
             <th>Title</th>
             <th>Author</th>
             <th>Keywords</th>
@@ -30,6 +31,7 @@
           <% allpostlist.forEach((post, index) => { %>
             <tr>
               <td><%= index + 1 %></td>
+              <td><img src="/<%= post.image %>" alt="Post Image" style="width: 50px; height: auto;"></td>
               <td><%= post.title %></td>
               <td><%= post.author.username %></td>
               <td><%= post.metaKeywords %></td>

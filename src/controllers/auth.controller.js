@@ -32,7 +32,12 @@ export const signInHandler= async(req, res)=>{
             res.status(200).redirect("/dashboard")
                     
             }else{
-                res.status(401).json({msg:"Unauthorised"})
+                if(req.originalUrl.startsWith("/api")){
+                    res.status(401).json({msg:"Unauthorised"})
+                }else{
+                    res.status(409).render("login",{errormsg:"Please check your Email or Password"})
+                }
+                
             }
 
     }catch(err){
@@ -51,9 +56,14 @@ export const signUpHandler = async(req, res)=>{
                 password: password
             });
             const newUserSaved = await newUser.save();
+            res.status(200).redirect("/login")
             res.status(201).json(newUserSaved);
         } else if (checkExistingData.email == req.body.email) {
-            res.status(409).json({msg:"This Email Already used"})
+            if(req.originalUrl.startsWith("/api")){
+                res.status(409).json({msg:"This Email Already used"})
+            }else{
+                res.status(409).render('signup',{errormsg:"Email is already use"})
+            }
         } else if(checkExistingData.username == req.body.username){
             res.status(409).json({msg:"This Username Already Taken"})
         } else {

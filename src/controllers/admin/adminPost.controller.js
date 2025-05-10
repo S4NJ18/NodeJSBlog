@@ -35,13 +35,20 @@ export const getPost = async(req, res)=>{
 
 // Save the Post content 
 
-export const createPost = async(req, res)=>{
+export const createPost = async(req, res) => {
     const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
-    const {title, content, metaDescription, metaKeywords} = req.body;
+    const {title, content, metaDescription, metaKeywords } = req.body;
+    const imageFile = req.file.path;
+    const imagePath = imageFile.replace(/\\/g, '/').replace('public/', '');
+    console.log(imagePath)
     const convert_smallLetter = title.toLowerCase();
     const add_dash_text = convert_smallLetter.replaceAll(" ","-")
     const makeURLslug = `http://localhost:8000/blogs/${add_dash_text}`
     if(!getAdminUserDetails) res.status(401).render("login")
+    // Check if image file is uploaded
+    if (!imageFile) {
+        return res.status(400).json({ error: "Image is required" });
+    }
     try{
         const addBlog = new blog({
 
@@ -49,13 +56,14 @@ export const createPost = async(req, res)=>{
                 url:makeURLslug,
                 slug:add_dash_text,
                 content:content,
+                image:imagePath,
                 metaDescription:metaDescription,
                 metaKeywords:metaKeywords,
                 author: getAdminUserDetails._id
 
         }) 
         const getResponseSave = await addBlog.save();
-        if(!getResponseSave) res.send("Something is wrong");
+        // if(!getResponseSave) res.send("Something is wrong");
         res.status(201).redirect("/admin/allpost")
     } catch(err){
         console.log(`Post Blog Error: ${err}`)
@@ -76,24 +84,37 @@ export const postEditGetByID = async (req, res ) =>{
 
 
 export const postEditByID = async(req, res)=>{
+ try {
+        const getAdminUserDetails = await user.findById({ _id: req.adminUser.id });
 
-   
-    try{
-        const {title, content, metaDescription, metaKeywords} = req.body;
-        const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
-        if(!getAdminUserDetails) res.status(301).redirect("/login")
-        const saveData =  await blog.findByIdAndUpdate
-                (req.params.id,
-                    {
-                     title:title,
-                     content:content,
-                     metaDescription:metaDescription,
-                     metaKeywords:metaKeywords
-                    },{new:true}
-                )
-        res.status(302).redirect("/admin/allpost"); 
-    }catch(err){
-        console.log(`Post Edited Error Found: ${err}`)
+        if (!getAdminUserDetails) {
+            return res.status(401).render("login");
+        }
+
+        const { title, content, metaDescription, metaKeywords } = req.body;
+        let imagePath = '';
+
+        if (req.file) {
+            imagePath = req.file.path.replace(/\\/g, '/').replace('public/', '');
+        }
+
+        const updatedPost = await blog.findByIdAndUpdate(
+            req.params.id,
+            {
+                title,
+                content,
+                metaDescription,
+                metaKeywords,
+                ...(imagePath && { image: imagePath }) // Update image only if it is uploaded
+            },
+            { new: true }
+        );
+
+        res.status(302).redirect("/admin/allpost");
+
+    } catch (err) {
+        console.log(`Post Edit Error: ${err}`);
+        return res.status(500).send("Something went wrong.");
     }
 
 }
