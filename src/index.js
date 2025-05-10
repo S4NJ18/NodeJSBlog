@@ -8,6 +8,7 @@ import {connectDB} from "./db/DB_connection.js"
 import {app} from "./app.js"
 import userRoutes from "./routes/user.routes.js"
 import commonRoutes from "./routes/common.routes.js"
+// import notFound from "./routes/common.routes.js"
 import editUserRouts from "./routes/user.routes.js"
 import deleteUserRouts from "./routes/user.routes.js"
 import signIn from "./routes/auth.routes.js"
@@ -45,6 +46,7 @@ app.use('/', dashboardRoutes)
 app.use('/', adminPostListRoutes)
 app.use('/', adminPostEdit)
 app.use('/', adminPostDelete)
+// app.use('/', notFound)
 app.use('/profile',editUserRouts);
 app.use('/profile/delete',deleteUserRouts);
 
