@@ -1,32 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= singleBlogData.title %> | My Blog</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
+    body {
+      background-color: #f8f9fa;
+    }
     .blog-content img {
       max-width: 100%;
       height: auto;
+      border-radius: 0.5rem;
+    }
+    .blog-container {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
     }
   </style>
 </head>
 <body>
+
   <div class="container mt-5">
-    <a href="/blogs" class="btn btn-secondary mb-3">← Back to All Blogs</a>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/blogs">Blogs</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= singleBlogData.title %></li>
+      </ol>
+    </nav>
 
-    <h1><%= singleBlogData.title %></h1>
-    <p class="text-muted">Published on <%= new Date(singleBlogData.createdAt).toDateString() %></p>
-    
-    <% if (singleBlogData.image) { %>
-      <img src="/<%= singleBlogData.image %>" alt="<%= singleBlogData.title %>" class="img-fluid mb-4">
-    <% } %>
+    <!-- Blog Content -->
+    <div class="blog-container">
+      <h1 class="mb-3"><%= singleBlogData.title %></h1>
+      <p class="text-muted mb-4">Published on <%= new Date(singleBlogData.createdAt).toDateString() %></p>
 
-    <hr>
+      <% if (singleBlogData.image) { %>
+        <img src="/<%= singleBlogData.image %>" alt="<%= singleBlogData.title %>" class="img-fluid mb-4">
+      <% } %>
 
-    <div class="blog-content">
-      <%- singleBlogData.content %> <!-- Use <%- %> to allow HTML inside content -->
+      <hr>
+
+      <div class="blog-content">
+        <%- singleBlogData.content %>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <a href="/blogs" class="btn btn-outline-secondary">← Back to All Blogs</a>
     </div>
   </div>
+
 </body>
 </html>

@@ -1,13 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Blog - Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    .blog-card img {
+      height: 200px;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
-    <h1>
-        hello
-    </h1>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">My Blog</a>
+    </div>
+  </nav>
+
+  <!-- Breadcrumb -->
+  <div class="container mt-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+      </ol>
+    </nav>
+
+    <!-- Slider / Carousel -->
+    <div id="blogCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/path/to/image1.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+            <h5>Featured Blog 1</h5>
+            <p>Short description about blog 1.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="/path/to/image2.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+            <h5>Featured Blog 2</h5>
+            <p>Short description about blog 2.</p>
+          </div>
+        </div>
+        <!-- Add more slides if needed -->
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#blogCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#blogCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+
+    <!-- Blog Cards Grid -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        <% if(errormsg) { %>
+           <p> <%= errormsg %> </p>
+        <% } else { %>
+
+
+        <% getBlogAllListFinal.forEach((data, index) => { %>
+        <div class="col">
+            <div class="card blog-card shadow-sm">
+                <img src="<%= data.image || '/default-image.jpg' %>" class="card-img-top" alt="Blog Image">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= data.title %></h5>
+                        <p class="card-text"><<%= data.previewText %></p>
+                        <p class="text-muted">By <%= data.author?.username %> | <%= new Date(data.createdAt).toDateString() %></p>
+                        <a href="/blogs/<%= data.slug %>" class="btn btn-primary btn-sm">Read More</a>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+      
+
+      <% } %>
+      
+      <!-- Card 2 -->
+
+      <!-- Repeat more cards as needed -->
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
