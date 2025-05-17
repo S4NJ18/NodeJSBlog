@@ -59,7 +59,7 @@
         <% } else { %>
 
 
-        <% getBlogAllListFinal.forEach((data, index) => { %>
+        <% getBlogAllListFinal.slice(0,6).forEach((data, index) => { %>
         <div class="col">
             <div class="card blog-card shadow-sm">
                 <img src="<%= data.image || '/default-image.jpg' %>" class="card-img-top" alt="Blog Image">
