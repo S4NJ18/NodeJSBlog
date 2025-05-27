@@ -35,41 +35,51 @@ export const getPost = async(req, res)=>{
 
 // Save the Post content 
 
-export const createPost = async(req, res) => {
-    const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
-    const {title, content, metaDescription, metaKeywords } = req.body;
+export const createPost = async (req, res) => {
+  try {
+    // 1. Get admin user
+    const getAdminUserDetails = await user.findById(req.adminUser.id);
+    if (!getAdminUserDetails) {
+      return res.status(401).render("login");
+    }
+
+    // 2. Extract form data
+    const { title, content, metaDescription, metaKeywords } = req.body;
+
+    // 3. Check and handle uploaded file
+    if (!req.file) {
+      return res.status(400).json({ error: "Image is required" });
+    }
+
     const imageFile = req.file.path;
     const imagePath = imageFile.replace(/\\/g, '/').replace('public/', '');
-    console.log(imagePath)
+
+    // 4. Slug creation
     const convert_smallLetter = title.toLowerCase();
-    const add_dash_text = convert_smallLetter.replaceAll(" ","-")
-    const makeURLslug = `http://localhost:8000/blogs/${add_dash_text}`
-    if(!getAdminUserDetails) res.status(401).render("login")
-    // Check if image file is uploaded
-    if (!imageFile) {
-        return res.status(400).json({ error: "Image is required" });
-    }
-    try{
-        const addBlog = new blog({
+    const add_dash_text = convert_smallLetter.replaceAll(" ", "-");
+    const makeURLslug = `http://localhost:8000/blogs/${add_dash_text}`;
 
-                title:title,
-                url:makeURLslug,
-                slug:add_dash_text,
-                content:content,
-                image:imagePath,
-                metaDescription:metaDescription,
-                metaKeywords:metaKeywords,
-                author: getAdminUserDetails._id
+    // 5. Create and save blog
+    const addBlog = new blog({
+      title,
+      url: makeURLslug,
+      slug: add_dash_text,
+      content,
+      image: imagePath,
+      metaDescription,
+      metaKeywords,
+      author: getAdminUserDetails._id,
+    });
 
-        }) 
-        const getResponseSave = await addBlog.save();
-        // if(!getResponseSave) res.send("Something is wrong");
-        res.status(201).redirect("/admin/allpost")
-    } catch(err){
-        console.log(`Post Blog Error: ${err}`)
-    }
+    const getResponseSave = await addBlog.save();
 
-}
+    res.status(201).redirect("/admin/allpost");
+  } catch (err) {
+    console.log(`Post Blog Error: ${err}`);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 
 export const postEditGetByID = async (req, res ) =>{
     try{

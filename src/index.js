@@ -44,7 +44,6 @@ app.use('/', dashboardRoutes)
 app.use('/', adminPostListRoutes)
 app.use('/', adminPostEdit)
 app.use('/', adminPostDelete)
-// app.use('/', notFound)
 app.use('/profile',editUserRouts);
 app.use('/profile/delete',deleteUserRouts);
 
