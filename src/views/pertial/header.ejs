@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg fixed-top" style="background: linear-gradient(45deg, #2c3e50, #3498db);">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="/">
+      <span class="fw-bold fs-4" style="letter-spacing: 1px;">📝 MyBlog</span>
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-label="Toggle navigation" style="border: none;">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item mx-2">
+          <a class="nav-link position-relative <%= currentPage === 'home' ? 'active' : '' %>" href="/" 
+             style="color: rgba(255,255,255,0.9); transition: 0.3s;">
+            Home
+          </a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link position-relative <%= currentPage === 'about' ? 'active' : '' %>" href="/about" 
+             style="color: rgba(255,255,255,0.9); transition: 0.3s;">
+            About
+          </a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link position-relative <%= currentPage === 'blog' ? 'active' : '' %>" href="/blogs" 
+             style="color: rgba(255,255,255,0.9); transition: 0.3s;">
+            Blog
+          </a>
+        </li>
+        <% if (userLoggedin)  { %>
+          <li class="nav-item mx-2">
+          <a class="nav-link position-relative <%= currentPage === 'dashboard' ? 'active' : '' %>" href="/dashboard" 
+             style="color: rgba(255,255,255,0.9); transition: 0.3s;">
+            Dashboard
+          </a>
+        </li>
+
+        <% } else {%>
+        <li class="nav-item mx-2">
+          <a class="nav-link position-relative <%= currentPage === 'login' ? 'active' : '' %>" href="/login" 
+             style="color: rgba(255,255,255,0.9); transition: 0.3s;">
+            Login
+          </a>
+        </li>
+        <li class="nav-item ms-2">
+          <a class="btn btn-outline-light rounded-pill px-4 py-2" 
+             href="/signup" 
+             style="transition: 0.3s; border-width: 2px;">
+            Get Started
+          </a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

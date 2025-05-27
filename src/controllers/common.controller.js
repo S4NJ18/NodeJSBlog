@@ -1,35 +1,48 @@
 import blog from "../models/blog.models.js";
 import user from "../models/user.models.js";
 
+export const homeHandler = async (req, res) => {
 
-export const homeHandler = async(req, res)=>{
+//   const checkLogin = await user.findById({_id:req.adminUser.id})
 
-    function stripHtmlTags(str) {
-        return str ? str.replace(/<\/?[^>]+(>|$)/g, "") : "";
-        }
+//   console.log(checkLogin)
 
-   try{
-    const rawBlogData = await blog.find().populate("author","username email");
+  function stripHtmlTags(str) {
+    return str ? str.replace(/<\/?[^>]+(>|$)/g, "") : "";
+  }
 
-    
-        const getBlogAllListFinal = rawBlogData.map(blog => {
-        const rawText = stripHtmlTags(blog.summary || blog.content);
-        return {
-            ...blog.toObject(),
-            previewText: rawText.substring(0, 100) + "..."
-        };
-        });
+  try {
+    const rawBlogData = await blog.find().populate("author", "username email");
+
+    const getBlogAllListFinal = rawBlogData.map((blog) => {
+      const rawText = stripHtmlTags(blog.summary || blog.content);
+      return {
+        ...blog.toObject(),
+        previewText: rawText.substring(0, 100) + "...",
+      };
+    });
+
+    if (!rawBlogData)
+      res
+        .status(404)
+        .render("home", { errormsg: "notfound", getBlogAllListFinal: [] });
+
+    res
+      .status(200)
+      .render("home", {
+        errormsg: null,
+        getBlogAllListFinal,
+        currentPage: "home",
+      });
+  } catch (err) {
+    res.status(500).send("Something Went Wrong");
+    console.log(err);
+  }
+};
 
 
-    if(!rawBlogData) res.status(404).render('home', {errormsg:"notfound", getBlogAllListFinal:[]})
+export const aboutHandler =(req, res)=>{
 
-    
-   
-    res.status(200).render('home',{errormsg:null, getBlogAllListFinal})
-
-     } catch(err){
-        res.status(500).send("Something Went Wrong")
-        console.log(err)
-     }
+  res.render("about", {currentPage:"about"})
 
 }

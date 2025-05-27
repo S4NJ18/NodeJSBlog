@@ -25,7 +25,7 @@ export const getPost = async(req, res)=>{
     // console.log(getAdminUser.username)
     try{
         if(!getAdminUserDetails) res.status(401).render("login")
-        res.status(200).render("add-blog")
+        res.status(200).render("add-blog",{user:getAdminUserDetails,page:"create"})
     }catch(err){
         console.log(`Blog Create Error: ${err}`)
     }

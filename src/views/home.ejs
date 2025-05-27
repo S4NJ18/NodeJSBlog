@@ -11,11 +11,14 @@
       object-fit: cover;
     }
   </style>
-</head>
-<body>
-  <!-- Navbar -->
-<%- include("./pertial/header.js") %>
 
+  <%- include('./pertial/head.ejs') %>
+</head>
+  <!-- Navbar -->
+
+  <body>
+
+ <%- include('./pertial/header', { title: 'Home | MyBlog' }) %>
   <!-- Breadcrumb -->
   <div class="container mt-3">
     <nav aria-label="breadcrumb">

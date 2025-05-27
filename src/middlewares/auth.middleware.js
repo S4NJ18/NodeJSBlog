@@ -26,15 +26,36 @@ export const tokenVerification = (req, res, next) =>{
 
 export const webTokenVerification = (req, res, next) =>{
     const getUserWebToken = req.cookies.token
-    if(!getUserWebToken) res.status(401).render("login")
+    if(!getUserWebToken) res.status(301).redirect("/login")
     const result = jwt.verify(getUserWebToken,process.env.jwt_key_secret)
     if(!result) return res.status(401).send("<p>Access Denied</p>")
-     
-        try{
-            req.adminUser = result;
-            next()
-        }catch(err){
-            console.log(`Web Token Verification Error: ${err}`)
-        }
+    try{
+        req.adminUser = result;
+        next()   
+    }catch(err){
+        console.log(`Web Token Verification Error: ${err}`)
+     }
 
 }
+
+export const userTokenVerification = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    // No token, proceed to login/signup page
+    return next();
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.jwt_key_secret);
+    req.adminUser = decoded;
+    // Token valid → redirect to dashboard instead of running login handler
+    return res.redirect("/dashboard");
+  } catch (err) {
+    console.log(`JWT Error: ${err}`);
+    // Token invalid or expired → continue to login/signup page
+    return next();
+  }
+};
+
+
+
+

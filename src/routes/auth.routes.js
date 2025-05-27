@@ -1,14 +1,13 @@
-import {signInHandler, signUpHandler, logoutHandler} from "../controllers/auth.controller.js"
+import {getSignInHandler,postSignInHandler, GetSignUpHandler, logoutHandler, PostSignUpHandler} from "../controllers/auth.controller.js"
 import {Router} from "express";
+import { userTokenVerification } from "../middlewares/auth.middleware.js";
 const router = Router()
 
+router.get("/login",userTokenVerification, getSignInHandler);
+router.post('/login', postSignInHandler)
 
-
-router.get("/login", (req, res)=>{ res.render("login", {errormsg:null}); });
-router.post('/login', signInHandler)
-
-router.get("/signup", (req, res)=>{ res.render("signup", { errormsg: null})});
-router.post("/signup", signUpHandler) 
+router.get("/signup", userTokenVerification, GetSignUpHandler);
+router.post("/signup", PostSignUpHandler) 
 
 router.get("/logout",logoutHandler)
 

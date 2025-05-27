@@ -1,0 +1,32 @@
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h4 class="p-3">Admin Panel</h4>
+    <a href="#">Dashboard</a>
+    
+    <a href="#">Post</a>
+    <div class="submenu">
+      <a href="/admin/allpost">All Posts</a>
+      <a href="/admin/posts/create">Add Post</a>
+      <a href="/admin/posts/categories">Category</a>
+    </div>
+    
+    <a href="#">Page</a>
+    <div class="submenu">
+      <a href="/admin/pages">All Pages</a>
+      <a href="/admin/pages/create">Add Page</a>
+      <a href="/admin/pages/categories">Category</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content w-100">
+    <!-- Topbar -->
+    <div class="topbar">
+      <h5>Welcome, <%= user.username %></h5>
+      <div class="user-menu">
+        <span><%= user.username %> ▾</span>
+        <div class="dropdown">
+          <a href="/logout">Logout</a>
+        </div>
+      </div>
+    </div>

@@ -1,13 +1,11 @@
 import {Router} from "express";
-import { homeHandler } from "../controllers/common.controller.js";
+import { homeHandler,aboutHandler } from "../controllers/common.controller.js";
+import { webTokenVerification } from "../middlewares/auth.middleware.js";
 
 
 const router = Router();
 router.get("/", homeHandler)
 
-// router.get('/:id', (req, res) =>{
-//       res.status(404).render('NotFound');
-// })
-
+router.get("/", aboutHandler)
 
 export default router;

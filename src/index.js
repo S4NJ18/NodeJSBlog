@@ -20,15 +20,11 @@ import adminPostEdit from "./routes/admin/adminPost.routes.js"
 import createBlog from "./routes/blog.routes.js"
 import blog from "./routes/blog.routes.js"
 import oneBlogOpen from "./routes/blog.routes.js"
-
-
+import { authStatusMiddleware } from "./middlewares/authStatus.js";
 // __dirname banane ke liye (ES modules ke liye)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-
 dotenv.config()
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));  // For URL-encoded form data
 app.use(cookieParser());
@@ -36,6 +32,8 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 // Normal Path
+
+app.use(authStatusMiddleware)
 app.use('/',commonRoutes);
 app.use('/',signIn)
 app.use('/',signUp)
