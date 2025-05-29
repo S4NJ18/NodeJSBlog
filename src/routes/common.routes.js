@@ -6,6 +6,6 @@ import { webTokenVerification } from "../middlewares/auth.middleware.js";
 const router = Router();
 router.get("/", homeHandler)
 
-router.get("/", aboutHandler)
+router.get("/about", aboutHandler)
 
 export default router;

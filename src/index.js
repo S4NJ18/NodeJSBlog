@@ -8,6 +8,7 @@ import {connectDB} from "./db/DB_connection.js"
 import {app} from "./app.js"
 import userRoutes from "./routes/user.routes.js"
 import commonRoutes from "./routes/common.routes.js"
+import aboutUs from  "./routes/common.routes.js"
 // import notFound from "./routes/common.routes.js"
 import editUserRouts from "./routes/user.routes.js"
 import deleteUserRouts from "./routes/user.routes.js"
@@ -19,6 +20,7 @@ import adminPostDelete from "./routes/admin/adminPost.routes.js"
 import adminPostEdit from "./routes/admin/adminPost.routes.js"
 import createBlog from "./routes/blog.routes.js"
 import blog from "./routes/blog.routes.js"
+import apiBlogList from "./routes/blog.routes.js"
 import oneBlogOpen from "./routes/blog.routes.js"
 import { authStatusMiddleware } from "./middlewares/authStatus.js";
 // __dirname banane ke liye (ES modules ke liye)
@@ -40,6 +42,7 @@ app.use('/',signUp)
 app.use('/',createBlog)
 app.use('/',blog)
 app.use('/',oneBlogOpen)
+app.use('/',aboutUs)
 app.use('/', dashboardRoutes)
 app.use('/', adminPostListRoutes)
 app.use('/', adminPostEdit)
@@ -51,6 +54,8 @@ app.use('/profile/delete',deleteUserRouts);
 app.use('/api/auth',signIn);
 app.use('/api/auth', signUp);
 app.use('/api/alluser',userRoutes)
+app.use('/api',apiBlogList)
+
 
 connectDB()
 .then(()=>{
