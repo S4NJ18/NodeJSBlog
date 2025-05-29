@@ -9,11 +9,20 @@
   <style>
     body {
       background-color: #f8f9fa;
-      height: 100vh;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scroll-container {
+      flex-grow: 1;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 2rem 1rem;
+      overflow-y: auto;
     }
+
     .signup-box {
       max-width: 450px;
       width: 100%;
@@ -22,6 +31,7 @@
       border-radius: 1rem;
       box-shadow: 0 0 20px rgba(0,0,0,0.05);
     }
+
     .links {
       display: flex;
       justify-content: center;
@@ -30,43 +40,46 @@
   </style>
 </head>
 <body>
-  <%- include('./pertial/header.ejs',{title:"Sign Up"}) %>
+  <%- include('./pertial/header.ejs', { title: "Sign Up" }) %>
 
-  <div class="signup-box">
-    <h2 class="text-center mb-4">Create Account</h2>
-    <form action="/signup" method="POST">
-      
-      <% if (errormsg) { %>
-        <div class="alert alert-danger" role="alert">
-          <%= errormsg %>
+  <div class="scroll-container">
+    <div class="signup-box mt-5">
+      <h2 class="text-center mb-4">Create Account</h2>
+      <form action="/signup" method="POST">
+        
+        <% if (errormsg) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= errormsg %>
+          </div>
+        <% } %>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" name="username" id="name" required>
         </div>
-      <% } %>
-      <div class="mb-3">
-        <label for="name" class="form-label">Full Name</label>
-        <input type="text" class="form-control" name="username" id="name" required>
-      </div>
 
-      <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" name="email" id="email" required>
-      </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" name="email" id="email" required>
+        </div>
 
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" name="password" id="password" required>
-      </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password" id="password" required>
+        </div>
 
-      <div class="mb-4">
-        <label for="confirmPassword" class="form-label">Confirm Password</label>
-        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" required>
-      </div>
+        <div class="mb-4">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" required>
+        </div>
 
-      <button type="submit" class="btn btn-success w-100">Sign Up</button>
+        <button type="submit" class="btn btn-success w-100">Sign Up</button>
 
-      <div class="links mt-3">
-        <span>Already have an account? <a href="/login">Login</a></span>
-      </div>
-    </form>
+        <div class="links mt-3">
+          <span>Already have an account? <a href="/login">Login</a></span>
+        </div>
+      </form>
+    </div>
   </div>
 
   <!-- Bootstrap JS -->
