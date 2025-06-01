@@ -33,8 +33,8 @@ app.use(cookieParser());
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-// Normal Path
 
+// Normal Path
 app.use(authStatusMiddleware)
 app.use('/',commonRoutes);
 app.use('/',signIn)
@@ -55,6 +55,13 @@ app.use('/api/auth',signIn);
 app.use('/api/auth', signUp);
 app.use('/api/alluser',userRoutes)
 app.use('/api',apiBlogList)
+
+
+// This means: if none of the routes match this middleware will run.
+
+app.use((req, res) => {
+  res.status(404).render("NotFound");
+});
 
 
 connectDB()
