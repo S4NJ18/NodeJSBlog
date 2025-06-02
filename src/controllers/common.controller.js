@@ -12,7 +12,7 @@ export const homeHandler = async (req, res) => {
   }
 
   try {
-    const rawBlogData = await blog.find().populate("author", "username email");
+    const rawBlogData = await blog.find().populate("author", "username email").populate("category","name");
 
     const getBlogAllListFinal = rawBlogData.map((blog) => {
       const rawText = stripHtmlTags(blog.summary || blog.content);

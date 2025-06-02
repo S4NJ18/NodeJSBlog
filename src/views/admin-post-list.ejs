@@ -28,6 +28,7 @@
             <th>#</th>
             <th>Thumbnail</th>
             <th>Title</th>
+            <th>Category</th>
             <th>Author</th>
             <th>Keywords</th>
             <th style="width: 180px;">Actions</th>
@@ -39,6 +40,7 @@
               <td><%= index + 1 %></td>
               <td><img src="/<%= post.image %>" alt="Post Image" style="width: 50px; height: auto;"></td>
               <td><%= post.title %></td>
+              <td><%= post.category && post.category.name ? post.category.name : 'Uncategorized' %></td>
               <td><%= post.author.username %></td>
               <td><%= post.metaKeywords %></td>
               <td>

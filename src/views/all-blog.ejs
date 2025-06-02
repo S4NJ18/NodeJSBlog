@@ -12,6 +12,15 @@
       height: 200px;
       object-fit: cover;
     }
+        .badge-category {
+  display: inline-block;
+  background-color: #e0f3ff;
+  color: #007bff;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
   </style>
 
   <%- include('./pertial/head.ejs') %>
@@ -42,10 +51,12 @@
             <div class="card blog-card shadow-sm">
                 <img src="<%= data.image || 'https://placehold.co/600x400' %>" class="card-img-top" alt="Blog Image">
                     <div class="card-body">
-                        <h5 class="card-title"><%= data.title %></h5>
-                        <p class="card-text"><<%= data.previewText %></p>
-                        <p class="text-muted">By <%= data.author?.username %> | <%= new Date(data.createdAt).toDateString() %></p>
-                        <a href="/blogs/<%= data.slug %>" class="btn btn-primary btn-sm">Read More</a>
+                        <span class="badge-category"><%= data.category && data.category.name ? data.category.name : "Uncategorized" %></span>
+
+                        <h5 class="card-title p-1"><%= data.title %></h5>
+                        <!-- <p class="card-text p-1"><<%= data.previewText %></p> -->
+                        <p class="text-muted p-1">By <%= data.author?.username %> | <%= new Date(data.createdAt).toDateString() %></p>
+                        <a href="/blogs/<%= data.slug %>" class="btn btn-primary btn-sm p-1">Read More</a>
         </div>
       </div>
     </div>

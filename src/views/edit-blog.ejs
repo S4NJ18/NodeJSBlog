@@ -8,7 +8,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
     <title>Edit: <%= prevalue.title %></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <style>
       body {
@@ -24,13 +26,14 @@
       }
     </style>
 
-      <% if (page === 'edit-post') { %>
-    <link rel="stylesheet" href="/css/Admin_sidebar.css">
-  <% } %>
-
+    <% if (page === 'edit-post') { %>
+    <link
+      rel="stylesheet"
+      href="/css/Admin_sidebar.css" />
+    <% } %>
   </head>
   <body>
-     <%- include("./pertial/admin-sidebar.ejs") %>
+    <%- include("./pertial/admin-sidebar.ejs") %>
     <div class="container form-container">
       <h2 class="mb-4 text-center">📝 Add Blog Post</h2>
       <h2>Add Blog Post</h2>
@@ -38,52 +41,85 @@
         action="/admin/posts/edit/<%= prevalue._id %>"
         method="post"
         enctype="multipart/form-data">
-          <div class="mb-3">
-        <label for="title" class="form-label">Title:</label>
-        <input
-          type="text"
-          name="title"
-          value="<%= prevalue.title %>" class="form-control"
-          required />
-
-          </div>
-
-            <div class="mb-3">
-
-        <label for="editor" class="form-label">Body:</label>
-        <textarea
-          id="editor1"
-          name="content" class="form-control"
-          required >
-<%= prevalue.content %></textarea
-        >
+        <div class="mb-3">
+          <label
+            for="title"
+            class="form-label"
+            >Title:</label
+          >
+          <input
+            type="text"
+            name="title"
+            value="<%= prevalue.title %>"
+            class="form-control"
+            required />
         </div>
-          <div class="mb-3">
 
-        <label for="image" class="form-label" >Upload Image:</label>
+        <div class="mb-3">
+          <label
+            for="editor"
+            class="form-label"
+            >Body:</label
+          >
+          <textarea
+            id="editor1"
+            name="content"
+            class="form-control"
+            required>
+<%= prevalue.content %></textarea
+          >
+        </div>
+        <div class="mb-3">
+          <label for="category">Category:</label>
+          <select
+            name="category"
+            required>
+            <option value="">-- Select Category --</option>
+            <% categoryDetail.forEach((cat)=> { %>
+            <option value="<%= cat._id %>"><%= cat.name %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label
+            for="image"
+            class="form-label"
+            >Upload Image:</label
+          >
 
-        <input
-          type="file"
-          name="image" class="form-control"/>
-          </div>
-            <div class="mb-3">
-        <label for="metaDescription" class="form-label">Meta Description:</label>
-        <input
-          type="text"
-          name="metaDescription"
-          value="<%= prevalue.metaDescription %>"  class="form-control"/></div>
+          <input
+            type="file"
+            name="image"
+            class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label
+            for="metaDescription"
+            class="form-label"
+            >Meta Description:</label
+          >
+          <input
+            type="text"
+            name="metaDescription"
+            value="<%= prevalue.metaDescription %>"
+            class="form-control" />
+        </div>
 
-            <div class="mb-3">
+        <div class="mb-3">
+          <label>Meta Keywords (comma-separated):</label>
+          <input
+            type="text"
+            name="metaKeywords"
+            value="<%= prevalue.metaKeywords %>"
+            class="form-control" />
+        </div>
 
-        <label>Meta Keywords (comma-separated):</label>
-        <input
-          type="text"
-          name="metaKeywords"
-          value="<%= prevalue.metaKeywords %>" class="form-control"/></div>
-
-          <div class="d-grid gap-2">
-
-        <button type="submit" class="btn btn-primary btn-lg">Update</button>
+        <div class="d-grid gap-2">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg">
+            Update
+          </button>
         </div>
       </form>
     </div>

@@ -41,6 +41,16 @@
         <textarea id="editor" name="content" class="form-control" rows="6" required></textarea>
       </div>
 
+        <div class="mb-3">
+          <label for="category">Category:</label>
+          <select name="category" required>
+            <option value="">-- Select Category --</option>
+            <% categoryDetail.forEach((cat)=> { %>
+            <option value="<%= cat._id %>"><%= cat.name %></option>
+            <% }); %>
+          </select>
+        </div>
+
       <div class="mb-3">
         <label for="image" class="form-label">Upload Image:</label>
         <input type="file" id="image" name="image" class="form-control">

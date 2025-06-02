@@ -2,13 +2,16 @@ import user from "../../models/user.models.js";
 
 import blog from "../../models/blog.models.js";
 
+import blogCategory from "../../models/category.models.js";
+
 
 // Get Post lIST
 
 export const allPostList = async(req, res)=>{
    try{
     const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
-    const getAllpostList = await blog.find().populate("author","username");
+    const getAllpostList = await blog.find().populate("author","username").populate("category","name");
+    // console.log(getAllpostList[7])
     if(!getAdminUserDetails) res.status(301).redirect("/login")
     res.status(200).render("admin-post-list",{allpostlist:getAllpostList, user:getAdminUserDetails, page:"admin-post-list"})
 
@@ -21,11 +24,14 @@ export const allPostList = async(req, res)=>{
 // Renders Text Editor 
 
 export const getPost = async(req, res)=>{
-    const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
+
     // console.log(getAdminUser.username)
     try{
+        const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
         if(!getAdminUserDetails) res.status(401).render("login")
-        res.status(200).render("add-blog",{user:getAdminUserDetails,page:"create"})
+        const getCategoryDetails = await blogCategory.find();
+
+        return res.status(200).render("add-blog",{user:getAdminUserDetails, categoryDetail: getCategoryDetails, page:"create"})
     }catch(err){
         console.log(`Blog Create Error: ${err}`)
     }
@@ -44,7 +50,7 @@ export const createPost = async (req, res) => {
     }
 
     // 2. Extract form data
-    const { title, content, metaDescription, metaKeywords } = req.body;
+    const { title, content, metaDescription, metaKeywords,category } = req.body;
 
     // 3. Check and handle uploaded file
     if (!req.file) {
@@ -68,6 +74,7 @@ export const createPost = async (req, res) => {
       image: imagePath,
       metaDescription,
       metaKeywords,
+      category,
       author: getAdminUserDetails._id,
     });
 
@@ -86,12 +93,14 @@ export const postEditGetByID = async (req, res ) =>{
         const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
         if(!getAdminUserDetails) res.status(301).redirect("/login")
         const getSingleBlogDetails = await blog.findById(req.params.id)
-        res.status(200).render("edit-blog",{prevalue:getSingleBlogDetails, page:"edit-post", user:getAdminUserDetails})
+        const getCategoryDetails = await blogCategory.find();
+        return res.status(200).render("edit-blog",{prevalue:getSingleBlogDetails, categoryDetail:getCategoryDetails, page:"edit-post", user:getAdminUserDetails})
     } catch(err){
        console.log(`Found the error: ${err}`)
     }
 }
 
+// Edit Post
 
 export const postEditByID = async(req, res)=>{
  try {
@@ -101,7 +110,7 @@ export const postEditByID = async(req, res)=>{
             return res.status(401).render("login");
         }
 
-        const { title, content, metaDescription, metaKeywords } = req.body;
+        const { title, content, metaDescription, metaKeywords, category } = req.body;
         let imagePath = '';
 
         if (req.file) {
@@ -115,6 +124,7 @@ export const postEditByID = async(req, res)=>{
                 content,
                 metaDescription,
                 metaKeywords,
+                category,
                 ...(imagePath && { image: imagePath }) // Update image only if it is uploaded
             },
             { new: true }

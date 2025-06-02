@@ -96,7 +96,7 @@ try{
         // Slug creation
     const convert_smallLetter = title.toLowerCase();
     const add_dash_text = convert_smallLetter.replaceAll(" ", "-");
-    const makeURLslug = `http://localhost:8000/${add_dash_text}`;
+    const makeURLslug = `http://localhost:8000/category/${add_dash_text}`;
 
 
     const getCategoryData = await blogCategory.findByIdAndUpdate(req.params.id,{
