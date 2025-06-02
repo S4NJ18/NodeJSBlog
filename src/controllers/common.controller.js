@@ -47,9 +47,3 @@ export const aboutHandler =(req, res)=>{
 
 }
 
-// export const errorHandler =(req, res)=>{
-//   const pages = ["/home",'/blog','/contact','/blogs']
-//   const bodyParamReq = req.params.slug
-//   console.log(bodyParamReq) 
-//   return res.send(bodyParamReq)
-// }

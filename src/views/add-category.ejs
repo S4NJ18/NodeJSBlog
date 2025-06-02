@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+    <title><%= page === 'Add Category' ? 'Add Category' : 'Edit Category' %></title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .form-container {
+      max-width: 100%;
+      margin: 20px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+  </style>
+
+  <% if (page === 'Add Category' || page === 'Edit Category') { %>
+    <link rel="stylesheet" href="/css/Admin_sidebar.css">
+  <% } %>
+</head>
+<body>
+
+  <%- include("./pertial/admin-sidebar.ejs") %>
+
+  <% if (page === 'Add Category') { %>
+
+  <div class="container form-container">
+    <h2 class="mb-4 text-center">📝 Add Category</h2>
+
+
+
+    <form action="/admin/category/create" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title:</label>
+        <input type="text" id="title" name="title" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="editor" class="form-label">Body:</label>
+        <textarea id="editor" name="content" class="form-control" rows="6" required></textarea>
+      </div>
+
+      <!-- <div class="mb-3">
+        <label for="image" class="form-label">Upload Image:</label>
+        <input type="file" id="image" name="image" class="form-control">
+      </div> -->
+
+      <div class="mb-3">
+        <label for="metaDescription" class="form-label">Meta Description:</label>
+        <input type="text" id="metaDescription" name="metaDescription" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="metaKeywords" class="form-label">Meta Keywords (comma-separated):</label>
+        <input type="text" id="metaKeywords" name="metaKeywords" class="form-control">
+      </div>
+
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary btn-lg">🚀 Add Category</button>
+      </div>
+    </form>
+  </div>
+
+  <% } else if('Edit Category') { %>
+
+    <div class="container form-container">
+    <h2 class="mb-4 text-center">📝 Edit Category</h2>
+
+
+
+    <form action="/admin/category/edit/<%= category._id %>" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title:</label>
+        <input type="text" id="title" name="title" value="<%= category.name %>" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="editor" class="form-label">Body:</label>
+        <textarea id="editor" name="content" class="form-control" rows="6" required> <%= category.description %></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="metaDescription" class="form-label">Meta Description:</label>
+        <input type="text" id="metaDescription" name="metaDescription" value="<%= category.metaDescription %>" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="metaKeywords" class="form-label">Meta Keywords (comma-separated):</label>
+        <input type="text" id="metaKeywords" name="metaKeywords" value="<%= category.metaKeywords %>" class="form-control">
+      </div>
+
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary btn-lg">🚀 Add Category</button>
+      </div>
+    </form>
+  </div>
+
+  <% } else { %>
+      <h1>Something is wrong</h1>
+  <% } %>
+
+
+
+  <script>
+    CKEDITOR.replace('editor');
+  </script>
+
+</body>
+</html>

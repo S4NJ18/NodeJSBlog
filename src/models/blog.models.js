@@ -23,6 +23,10 @@ const blogSchema = new mongoose.Schema({
      metaKeywords:{
         type:[String]
         },
+     category:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref: "blogCategory"
+     },
      createdAt: {
        type: Date,
        default: Date.now

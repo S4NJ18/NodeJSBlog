@@ -10,16 +10,22 @@
       background-color: #f8f9fa;
     }
     .form-container {
-      max-width: 800px;
-      margin: 40px auto;
+      max-width: 100%;
+      margin: 20px auto;
       background: white;
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
   </style>
+
+  <% if (page === 'create') { %>
+    <link rel="stylesheet" href="/css/Admin_sidebar.css">
+  <% } %>
 </head>
 <body>
+
+  <%- include("./pertial/admin-sidebar.ejs") %>
 
   <div class="container form-container">
     <h2 class="mb-4 text-center">📝 Add Blog Post</h2>

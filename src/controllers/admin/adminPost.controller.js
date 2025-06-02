@@ -10,7 +10,7 @@ export const allPostList = async(req, res)=>{
     const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
     const getAllpostList = await blog.find().populate("author","username");
     if(!getAdminUserDetails) res.status(301).redirect("/login")
-    res.status(200).render("admin-post-list",{allpostlist:getAllpostList})
+    res.status(200).render("admin-post-list",{allpostlist:getAllpostList, user:getAdminUserDetails, page:"admin-post-list"})
 
    }catch(err){
     console.log(console.log(`All admin post List ${err}`))
@@ -86,7 +86,7 @@ export const postEditGetByID = async (req, res ) =>{
         const getAdminUserDetails = await user.findById({_id:req.adminUser.id})
         if(!getAdminUserDetails) res.status(301).redirect("/login")
         const getSingleBlogDetails = await blog.findById(req.params.id)
-        res.status(200).render("edit-blog",{prevalue:getSingleBlogDetails})
+        res.status(200).render("edit-blog",{prevalue:getSingleBlogDetails, page:"edit-post", user:getAdminUserDetails})
     } catch(err){
        console.log(`Found the error: ${err}`)
     }

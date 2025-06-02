@@ -9,7 +9,7 @@ import {app} from "./app.js"
 import userRoutes from "./routes/user.routes.js"
 import commonRoutes from "./routes/common.routes.js"
 import aboutUs from  "./routes/common.routes.js"
-// import notFound from "./routes/common.routes.js"
+import createCategory from "./routes/admin/adminCategory.routes.js"
 import editUserRouts from "./routes/user.routes.js"
 import deleteUserRouts from "./routes/user.routes.js"
 import signIn from "./routes/auth.routes.js"
@@ -40,6 +40,7 @@ app.use('/',commonRoutes);
 app.use('/',signIn)
 app.use('/',signUp)
 app.use('/',createBlog)
+app.use('/',createCategory)
 app.use('/',blog)
 app.use('/',oneBlogOpen)
 app.use('/',aboutUs)
