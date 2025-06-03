@@ -9,7 +9,7 @@ This is a **feature-rich backend** project for a blog website built using modern
 - **JWT** and **Bcrypt** for secure authentication (Login/Signup)  
 - **Access & Refresh Tokens** for session management  
 - **Multer** for file uploads  
-- **EJS** for rendering views (optional)  
+- **EJS** for rendering views  
 - Follows best practices for code structure, environment management, and modularization  
 
 You'll find complete CRUD functionality:
@@ -33,7 +33,7 @@ You'll find complete CRUD functionality:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/nodejs-backend.git
+git clone https://github.com/S4NJ18/NodeJSBlog.git
 cd nodejs-backend
 
 # 2. Install dependencies
