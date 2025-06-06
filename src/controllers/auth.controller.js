@@ -80,9 +80,9 @@ export const postSignInHandler = async (req, res) => {
       if (req.originalUrl.startsWith("/api")) {
         res.status(401).json({ msg: "Unauthorised" });
       } else {
-        res
-          .status(409)
-          .render("login", { errormsg: "Please check your Email or Password" });
+              const headerData = req.rateLimit.remaining;
+
+        res.status(409).render("login", { errormsg: "Please check your Email or Password",attemptLimt: headerData, currentPage : 'login', csrfToken: req.csrfToken() });
       }
     }
   } catch (err) {
@@ -93,9 +93,11 @@ export const getSignInHandler = async (req, res) => {
   try {
     // Check if token was verified and user was attached
     if (!req.adminUser || !req.adminUser.id) {
+      const headerData = req.rateLimit.remaining;
       return res.status(200).render("login", {
         errormsg: null,
         currentPage: "login",
+        attemptLimt: headerData,
         csrfToken: req.csrfToken()
       });
     }
@@ -107,6 +109,8 @@ export const getSignInHandler = async (req, res) => {
       return res.status(200).render("login", {
         errormsg: null,
         currentPage: "login",
+        loginlimit: headerData,
+        csrfToken: req.csrfToken()
       });
     } else {
       return res.status(301).redirect("/dashboard");
