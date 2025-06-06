@@ -93,7 +93,8 @@ export const getSignInHandler = async (req, res) => {
   try {
     // Check if token was verified and user was attached
     if (!req.adminUser || !req.adminUser.id) {
-      const headerData = req.rateLimit.remaining;
+      // "If the left side is null or undefined, then return the right side (default value 0)"
+      const headerData = req.rateLimit?.remaining ?? 0;
       return res.status(200).render("login", {
         errormsg: null,
         currentPage: "login",
