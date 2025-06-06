@@ -2,6 +2,7 @@ import dotenv from "dotenv"
 import express from "express"
 import multer from "multer";
 import path from "path"
+import csurf from "csurf";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser"
 import {connectDB} from "./db/DB_connection.js"
@@ -30,6 +31,8 @@ dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));  // For URL-encoded form data
 app.use(cookieParser());
+const csrfProtection = csurf({ cookie: true });
+app.use(csrfProtection);
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

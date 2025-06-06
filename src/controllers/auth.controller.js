@@ -1,6 +1,10 @@
 import user from "../models/user.models.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import fs from "fs/promises";
+import path from 'path'
+
+// fs.readFileSync
 
 export const postSignInHandler = async (req, res) => {
   try {
@@ -28,7 +32,48 @@ export const postSignInHandler = async (req, res) => {
         maxAge: 24 * 60 * 60 * 1000,
       });
 
+      // const logPath = path.join(__dirname, '..', '..', 'public', 'logs.txt');
+
+      const loginIP = req.headers['x-forwarded-for']||req.ip;
+      const loginTime = new Date();
+      const logData = `${loginTime} - IP ${loginIP.replace("::ffff:","")}`
+      const logPath = './public/log.txt'
+
       // res.status(200).json({msg:`welcome ${getData.username}`})
+
+      // Logs The login Data
+
+      const logsData = async()=>{
+        try{ 
+
+          let existingData = '';
+
+          try{
+
+            existingData = await fs.readFile(logPath, 'utf-8');
+
+          }catch(err){
+            if (err.code !== 'ENOENT') {
+                console.error("Error reading file:", err);
+                return;
+              }
+          }
+
+          if(existingData.trim().length > 0){
+            await fs.appendFile(logPath, `\n${logData}`, 'utf-8')
+          }else{
+            await fs.writeFile(logPath, logData, 'utf-8')
+          }
+          // console.log(existingData)
+
+        }catch (err){
+
+          return console.log(err)
+
+        }
+      }
+
+      logsData()
 
       res.status(200).redirect("/dashboard");
     } else {
@@ -51,6 +96,7 @@ export const getSignInHandler = async (req, res) => {
       return res.status(200).render("login", {
         errormsg: null,
         currentPage: "login",
+        csrfToken: req.csrfToken()
       });
     }
 
@@ -109,7 +155,9 @@ export const GetSignUpHandler = async (req, res) => {
     if(!req.adminUser || !req.adminUser.id){
         return res.status(200).render("signup", 
             { errormsg: null,
-                currentPage: "signup" 
+                currentPage: "signup" ,
+                csrfToken: req.csrfToken()
+
             });
     }
     const getUserTokenID = await user.findById({ _id: req.adminUser.id });
