@@ -1,4 +1,4 @@
-# 📝 Node.js Blog Backend Project
+# 📝 Node.js Blog Backend & Frontend Project
 
 ## 📖 Summary
 
