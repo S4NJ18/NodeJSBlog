@@ -1,4 +1,4 @@
-# 📝 Node.js Blog Backend & Frontend Project
+# 📝 Node.js Blog Backend & Frontend Project With Rest API Endpoint
 
 ## 📖 Summary
 
