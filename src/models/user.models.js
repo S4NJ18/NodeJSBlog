@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
+import { Sequelize } from "sequelize";
 import bcrypt from "bcrypt";
+
 
 const userSchema = new mongoose.Schema ({
     username :{

@@ -2,13 +2,14 @@ import {getSignInHandler,postSignInHandler, GetSignUpHandler, logoutHandler, Pos
 import {Router} from "express";
 import { userTokenVerification } from "../middlewares/auth.middleware.js";
 import {loginLimit}  from "../middlewares/rateLimit.middleware.js";
+import csrfProtection from "../middlewares/csrf.js";
 const router = Router()
 
-router.get("/login",userTokenVerification, getSignInHandler);
-router.post('/login', loginLimit, postSignInHandler)
+router.get("/login",userTokenVerification, csrfProtection, getSignInHandler);
+router.post('/login', loginLimit, csrfProtection, postSignInHandler)
 
-router.get("/signup", userTokenVerification, GetSignUpHandler);
-router.post("/signup", PostSignUpHandler) 
+router.get("/signup", userTokenVerification, csrfProtection, GetSignUpHandler);
+router.post("/signup", csrfProtection, PostSignUpHandler) 
 
 router.get("/logout",logoutHandler)
 

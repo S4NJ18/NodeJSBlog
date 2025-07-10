@@ -31,8 +31,10 @@ dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));  // For URL-encoded form data
 app.use(cookieParser());
-const csrfProtection = csurf({ cookie: true });
-app.use(csrfProtection);
+// const csrfProtection = csurf({ cookie: true });
+// app.use(csrfProtection);
+
+
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

@@ -31,7 +31,8 @@
     <h2 class="mb-4 text-center">📝 Add Blog Post</h2>
 
     <form action="/admin/posts/create" method="POST" enctype="multipart/form-data">
-      <div class="mb-3">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+       <div class="mb-3">
         <label for="title" class="form-label">Title:</label>
         <input type="text" id="title" name="title" class="form-control" required>
       </div>
@@ -65,6 +66,9 @@
         <label for="metaKeywords" class="form-label">Meta Keywords (comma-separated):</label>
         <input type="text" id="metaKeywords" name="metaKeywords" class="form-control">
       </div>
+
+              
+
 
       <div class="d-grid gap-2">
         <button type="submit" class="btn btn-primary btn-lg">🚀 Publish Post</button>
